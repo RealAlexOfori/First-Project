@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>My Cities List</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <ul class="menu">
+        <li><a href="/">Home</a></li>
+        <li><a href="/cities">Cities</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div>
+  <form action="/cities" method="post">
+    <label for="city">City:</label>
+    <input type="text" name="name" id="city" placeholder="Enter the city" /><br />
+    <label for="visited">Visited:</label>
+    <input type="checkbox" id="visited" name="visited" value="visited">
+   <input type="submit" value="Add city" />
+
+  </form>
+
+  <form action="/cities/delete" method="post">
+    <label for="city_id">City to remove:</label>
+    <select name="city_id" id="city_id">
+
+      {% for city in all_cities %}  
+        <option value="{{ city.id }}">{{ city.name }}</option>
+      {% endfor %}
+
+    </select>
+    
+    <input type="submit" value="Remove city" id="idremove" />
+   </form>
+   </div>
+   {% for city in cities %}  
+  <div>
+    <p>{{city.name}}, {{city.visited}} </p>
+  </div>
+  {% endfor %}
+  <div class="container">
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>
